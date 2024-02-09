@@ -1,17 +1,22 @@
+import Parse from 'parse'
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { createRoot } from 'react-dom/client';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Root from './parseComponents/Root';
+import Login from './parseComponents/Login';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+Parse.initialize('xxxxxxxxxx', 'xxxxxxx');
+Parse.serverURL = 'Your serverURL'
+Parse.CoreManager.set('IS_NODE', false);
+
+const root = createRoot(document.getElementById('root') ?? (() => {
+  throw new Error('Root element with id "root" not found in the document.');
+})());
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+  <BrowserRouter>
+    <Routes>
+      <Route path='/' element={<Root />} />
+      <Route path='/Login' element={<Login />} />
+    </Routes>
+  </BrowserRouter>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
